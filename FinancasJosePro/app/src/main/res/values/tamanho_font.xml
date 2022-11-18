@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="titulo">38sp</dimen>
+    <dimen name="normal">18sp</dimen>
+    <dimen name="botao">22sp</dimen>
+</resources>
