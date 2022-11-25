@@ -1,9 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastroActivity">
+    tools:context=".CadastroActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--add scrollView pois a activity é demasiadamente lonnnga-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/nomeCadTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Titulo"
+                android:textSize="@dimen/titulo"
+                android:layout_marginBottom="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome:"
+                    android:textSize="@dimen/normal"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valor:"
+                    android:textSize="@dimen/normal"/>
+
+                <EditText
+                    android:id="@+id/valorCadTxt"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:tooltipText="100000.00"
+                    android:text="100000.00"
+                    android:layout_marginRight="15dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data:"
+                    android:textSize="@dimen/normal"/>
+                <TextView
+                    android:id="@+id/dataCadTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18/12/2022"
+                    android:textSize="@dimen/normal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Classe:"
+                    android:textSize="@dimen/normal"/>
+
+                <Spinner
+                    android:id="@+id/classeCadSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/entradas"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/repeteCadCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Repete?"
+                    android:textSize="@dimen/normal"
+                    android:layout_marginBottom="8dp"/>
+
+                <!--spinner preenchido dinamicamente dentro da activity-->
+                <!--spinner não visivel para o usuario-->
+                <Spinner
+                    android:id="@+id/mesesCadSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="meses"
+                    android:textSize="@dimen/normal"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descrição:"
+                    android:textSize="@dimen/normal"/>
+
+                <EditText
+                    android:id="@+id/descricaoCadTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:textSize="@dimen/normal"
+                    android:inputType="textMultiLine"
+                    android:layout_marginBottom="15dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/imagemCadFoto"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:background="@mipmap/ic_launcher"/>
+            <Button
+                android:id="@+id/addFotoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add foto"
+                android:layout_marginBottom="30dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/salvarBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="salvar"
+                    android:layout_weight="0.5"
+                    android:layout_marginRight="10dp"/>
+
+                <Button
+                    android:id="@+id/cancelarBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="cancelar"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

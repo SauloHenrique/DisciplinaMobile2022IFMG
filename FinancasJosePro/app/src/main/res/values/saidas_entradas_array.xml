@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="saidas">
+        <item>Aluguel</item>
+        <item>Supermercado</item>
+        <item>Educacao</item>
+        <item>Energia</item>
+        <item>Telefone</item>
+        <item>Saude</item>
+        <item>lazer</item>
+        <item>Internet</item>
+        <item>Aportes</item>
+        <item>Parcelas</item>
+    </array>
+    <array name="entradas">
+        <item>Salario</item>
+        <item>Dividendos</item>
+        <item>Freelancer</item>
+        <item>Venda</item>
+    </array>
+</resources>

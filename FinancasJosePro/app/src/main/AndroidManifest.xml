@@ -11,10 +11,12 @@
         android:theme="@style/Theme.FinancasJosePro">
         <activity
             android:name=".HistoricoActivity"
-            android:exported="false" />
+            android:exported="true" >
+        </activity>
         <activity
             android:name=".CadastroActivity"
-            android:exported="false" />
+            android:exported="true">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -9,24 +9,29 @@
     android:gravity="center">
 
     <TextView
+        android:id="@+id/titulomesanotxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nov/2022"
-        android:textSize="@dimen/titulo"/>
+        android:textSize="@dimen/titulo"
+        android:layout_marginTop="32dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_weight="1">
 
         <Button
+            android:id="@+id/saidaBtn"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
             android:text="-"
             android:textSize="@dimen/botao"/>
 
         <fragment
+            android:id="@+id/fragmentovalores"
             class="com.example.financasjosepro.fragmets.InformacoesFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,11 +40,19 @@
             android:layout_marginRight="20dp"/>
 
         <Button
+            android:id="@+id/entradaBtn"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
             android:text="+"
             android:textSize="@dimen/botao"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/historicoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entradas"
+        android:layout_marginBottom="32dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

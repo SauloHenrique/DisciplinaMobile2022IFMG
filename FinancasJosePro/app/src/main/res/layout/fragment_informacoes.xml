@@ -8,15 +8,18 @@
     android:gravity="center">
 
     <TextView
+        android:id="@+id/saldoTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2300"
-        android:textSize="@dimen/normal"/>
+        android:textSize="@dimen/normal"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,6 +27,7 @@
             android:textSize="@dimen/normal" />
 
         <TextView
+            android:id="@+id/totalSaidaTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="7000"
@@ -41,6 +45,7 @@
             android:textSize="@dimen/normal" />
 
         <TextView
+            android:id="@+id/totalEntradaTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="9300"
