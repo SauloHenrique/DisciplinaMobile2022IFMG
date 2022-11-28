@@ -1,14 +1,19 @@
 package com.example.financasjosepro;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.example.financasjosepro.configuracao.SharedPreferencesAplicao;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,10 +36,15 @@ public class MainActivity extends AppCompatActivity {
         cadastraEntradaBtn = findViewById(R.id.entradaBtn);
         cadastraSaidaBtn = findViewById(R.id.saidaBtn);
 
-        this.dataOperacao = LocalDateTime.now();
+        aplicaConfiguracoes();
         configuraDataInicial();
-
         registroEventos();
+    }
+
+    private void aplicaConfiguracoes(){
+        SharedPreferencesAplicao minhasConfiguracoes =
+                new SharedPreferencesAplicao(MainActivity.this);
+        this.dataOperacao = minhasConfiguracoes.leituraData();
     }
 
     private void registroEventos(){
@@ -75,5 +85,14 @@ public class MainActivity extends AppCompatActivity {
                 }
         }
         return false;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferencesAplicao minhasConfiguracoes =
+                new SharedPreferencesAplicao(MainActivity.this);
+        minhasConfiguracoes.registraData(this.dataOperacao);
+
     }
 }
