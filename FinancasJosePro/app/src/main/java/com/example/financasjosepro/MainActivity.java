@@ -1,7 +1,9 @@
 package com.example.financasjosepro;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -12,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.financasjosepro.configuracao.SharedPreferencesAplicao;
 import com.example.financasjosepro.fragmets.InformacoesFragment;
+import com.example.financasjosepro.modelo.Entrada;
+import com.example.financasjosepro.repository.EntradaRepository;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -44,9 +48,30 @@ public class MainActivity extends AppCompatActivity {
         //referenciando o nosso fragment para um atributo
         informacoesMesFragment = (InformacoesFragment) getFragmentManager().findFragmentById((R.id.fragmentovalores));
 
+        requisitaPermissoes();
+
         aplicaConfiguracoes();
         configuraDataInicial();
         registroEventos();
+
+        testeBanco();
+
+    }
+
+    private void testeBanco(){
+        //String nome, double valor, LocalDateTime dataInicial, LocalDateTime dataFinal,
+        // boolean operacao, String descricao, String classificacao, boolean repete
+        Entrada novaEntrada  = new Entrada("Aluguel",1000, LocalDateTime.now(),
+                null,false,"aluguel caro", "aluguel",true);
+
+        EntradaRepository repo = new EntradaRepository(MainActivity.this);
+        repo.insertEvento(novaEntrada);
+
+    }
+
+    private void requisitaPermissoes(){
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
     }
 
     private void aplicaConfiguracoes(){
@@ -103,17 +128,16 @@ public class MainActivity extends AppCompatActivity {
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX(); break;
             case MotionEvent.ACTION_UP:
+                //movimento de parada...
                 x2 = event.getX();
                 if(x1 > x2){
                     //direita
-                    Toast.makeText(this,"direita",Toast.LENGTH_SHORT).show();
                     dataOperacao = dataOperacao.plusMonths(1);
-                    configuraDataInicial();
                 }else{
                     //esquerda
                     dataOperacao = dataOperacao.plusMonths(-1);
-                    configuraDataInicial();
                 }
+                configuraDataInicial();
         }
         return false;
     }
