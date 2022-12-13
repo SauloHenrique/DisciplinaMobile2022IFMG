@@ -29,6 +29,18 @@ public class Entrada {
         this.imagens = new Vector<>();
     }
 
+    public Entrada(long id, String nome, double valor, LocalDateTime dataInicial, LocalDateTime dataFinal, boolean operacao, String descricao, String classificacao, boolean repete) {
+        this.id = id;
+        this.nome = nome;
+        this.valor = valor;
+        this.dataInicial = dataInicial;
+        this.dataFinal = dataFinal;
+        this.operacao = operacao;
+        this.descricao = descricao;
+        this.classificacao = classificacao;
+        this.repete = repete;
+    }
+
     public long getId() {
         return id;
     }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.financasjosepro.configuracao.SharedPreferencesAplicao;
+import com.example.financasjosepro.controller.EntradaController;
 import com.example.financasjosepro.fragmets.InformacoesFragment;
 import com.example.financasjosepro.modelo.Entrada;
 import com.example.financasjosepro.repository.EntradaRepository;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Random;
+import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,19 +56,28 @@ public class MainActivity extends AppCompatActivity {
         configuraDataInicial();
         registroEventos();
 
-        testeBanco();
-
+        atualizaDadosMes();
     }
 
-    private void testeBanco(){
-        //String nome, double valor, LocalDateTime dataInicial, LocalDateTime dataFinal,
-        // boolean operacao, String descricao, String classificacao, boolean repete
-        Entrada novaEntrada  = new Entrada("Aluguel",1000, LocalDateTime.now(),
-                null,false,"aluguel caro", "aluguel",true);
+    private void atualizaDadosMes(){
+        EntradaController controller = new EntradaController(MainActivity.this);
+        try {
+            Vector<Entrada> entradas = controller.buscaEntradasPorData(dataOperacao.withDayOfMonth(1),
+                    dataOperacao.withDayOfMonth(dataOperacao.getDayOfMonth()));
 
-        EntradaRepository repo = new EntradaRepository(MainActivity.this);
-        repo.insertEvento(novaEntrada);
+            double somaMes = 0.0;
 
+            //somando os valores registrados no mes
+            for(Entrada et : entradas){
+                somaMes += et.isOperacao() ? et.getValor() : (et.getValor()*-1);
+            }
+
+            informacoesMesFragment.setSaldoTotal(somaMes);
+
+        }catch (Exception e){
+            //caso aconte. um erro mostramos a mens.
+            Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void requisitaPermissoes(){
@@ -138,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     dataOperacao = dataOperacao.plusMonths(-1);
                 }
                 configuraDataInicial();
+                atualizaDadosMes();
         }
         return false;
     }
