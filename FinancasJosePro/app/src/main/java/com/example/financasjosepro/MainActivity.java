@@ -56,14 +56,31 @@ public class MainActivity extends AppCompatActivity {
         configuraDataInicial();
         registroEventos();
 
+        cadastraEvento();
+
         atualizaDadosMes();
+    }
+
+    private void cadastraEvento(){
+
+        //String nome, double valor, LocalDateTime dataInicial, LocalDateTime dataFinal,
+        // boolean operacao, String descricao, String classificacao, boolean repete
+
+        EntradaController controller = new EntradaController(MainActivity.this);
+
+        Entrada novaEntrada = new Entrada("Salario",500,LocalDateTime.now(ZoneOffset.UTC),
+                LocalDateTime.now(ZoneOffset.UTC).withDayOfMonth(30), false, "Prolabore da startup", "Salario", false);
+
+        controller.insertEntrada(novaEntrada);
     }
 
     private void atualizaDadosMes(){
         EntradaController controller = new EntradaController(MainActivity.this);
         try {
-            Vector<Entrada> entradas = controller.buscaEntradasPorData(dataOperacao.withDayOfMonth(1),
-                    dataOperacao.withDayOfMonth(dataOperacao.getDayOfMonth()));
+            Vector<Entrada> entradas = controller.buscaEntradasPorData(
+                    dataOperacao.withDayOfMonth(1),
+                    dataOperacao.withDayOfMonth(dataOperacao.getMonth().
+                            length(dataOperacao.toLocalDate().isLeapYear())));
 
             double somaMes = 0.0;
 

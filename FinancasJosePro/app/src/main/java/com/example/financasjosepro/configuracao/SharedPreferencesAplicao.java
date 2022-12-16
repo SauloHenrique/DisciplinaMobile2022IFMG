@@ -38,7 +38,7 @@ public class SharedPreferencesAplicao {
         long tempoMil = shared.getLong("data_atual",-1);
 
         if(tempoMil == -1) {
-            return LocalDateTime.now();
+            return LocalDateTime.now(ZoneOffset.UTC);
         }else{
             Instant temp = Instant.ofEpochMilli(tempoMil);
             return LocalDateTime.ofInstant(temp, ZoneOffset.UTC);

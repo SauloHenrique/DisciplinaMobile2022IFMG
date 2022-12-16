@@ -64,4 +64,8 @@ public class CadastroActivity extends AppCompatActivity {
                 calendario.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    private void cadastraEntrada(){
+
+    }
+
 }

@@ -38,4 +38,11 @@ public class EntradaController {
 
     }
 
+    public void insertEntrada(Entrada novaEntrada){
+        if(novaEntrada != null){
+            EntradaRepository repository = new EntradaRepository(contexto);
+            repository.insertEvento(novaEntrada);
+        }
+    }
+
 }

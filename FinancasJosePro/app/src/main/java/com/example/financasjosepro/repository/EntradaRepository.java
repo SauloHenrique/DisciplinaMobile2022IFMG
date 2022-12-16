@@ -68,11 +68,10 @@ public class EntradaRepository {
         //datai >= 1 AND ((dataf <= 31 AND repete = 0) OR (dataf = -1 AND repete = 1))
 
         try(OperacoesBancoDados conexaoBanco = new OperacoesBancoDados(this.contexto)){
-            String sql_Busca = EsquemaBanco.Entrada.NOME_COLUNA_DATA_INICIAL + ">=? and ((" +
-                    EsquemaBanco.Entrada.NOME_COLUNA_DATA_FINAL + "<=? " +
-                    EsquemaBanco.Entrada.NOME_COLUNA_REPETE +"=0)OR (" +
-                    EsquemaBanco.Entrada.NOME_COLUNA_DATA_FINAL + "=-1 AND " +
-                    EsquemaBanco.Entrada.NOME_COLUNA_REPETE + "=1))";
+            String sql_Busca = "(dataf != -1 And " +
+                    "(repete = 0 And datai >= ? And dataf <= ?) Or" +
+                    "(repete = 1 And dataf >= ? And datai <= ?)) Or" +
+                    "(dataf = -1 And datai <= ?)";
 
             SQLiteDatabase tran = conexaoBanco.getReadableDatabase();
 
@@ -80,7 +79,7 @@ public class EntradaRepository {
             Cursor tuplas = tran.query(EsquemaBanco.Entrada.NOME_TABELA,
                     EsquemaBanco.Entrada.COLUNAS,
                     sql_Busca,
-                    new String[]{dataInicial+"", dataFinal+""}, null,
+                    new String[]{dataInicial+"", dataFinal+"", dataFinal+"", dataFinal+"", dataFinal+""}, null,
                     null, null);
 
             //ler as tuplas retornadas pelo banco e inserir no vetor de resultado
@@ -96,7 +95,7 @@ public class EntradaRepository {
                         Instant.ofEpochMilli(tuplas.getLong(3))
                                 .atZone(ZoneId.systemDefault()).toLocalDateTime(),
                         tuplas.getLong(4) == -1? null : Instant.ofEpochMilli(tuplas.getLong(4))
-                                                                .atZone(ZoneId.systemDefault()).toLocalDateTime(),
+                                                                .atZone(ZoneOffset.UTC).toLocalDateTime(),
                         tuplas.getInt(5) == 1,
                         tuplas.getString(6),
                         tuplas.getString(7),
