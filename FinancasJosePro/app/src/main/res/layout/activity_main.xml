@@ -12,7 +12,7 @@
         android:id="@+id/titulomesanotxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nov/2022"
+        android:text="Mes/20xx"
         android:textSize="@dimen/titulo"
         android:layout_marginTop="32dp"/>
 

@@ -74,13 +74,15 @@ public class InformacoesFragment extends Fragment {
         * */
         saldoTotalTxt = fragment.findViewById(R.id.saldoTxt);
         saldoSaidaTxt = fragment.findViewById(R.id.totalSaidaTxt);
-        saldoEntradaTxt = fragment.findViewById(R.id.totalEntradasTxt);
+        saldoEntradaTxt = fragment.findViewById(R.id.totalEntradaTxt);
 
         return fragment;
     }
 
-    public void setSaldoTotal(double novoValor){
+    public void setSaldoTotal(double novoValor, double novoSaida, double novoEntrada){
         saldoTotalTxt.setText(novoValor+"");
+        saldoSaidaTxt.setText(novoSaida+"");
+        saldoEntradaTxt.setText(novoEntrada+"");
     }
 
 

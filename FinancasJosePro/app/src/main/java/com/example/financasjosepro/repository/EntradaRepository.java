@@ -69,9 +69,10 @@ public class EntradaRepository {
 
         try(OperacoesBancoDados conexaoBanco = new OperacoesBancoDados(this.contexto)){
             String sql_Busca = "(dataf != -1 And " +
-                    "(repete = 0 And datai >= ? And dataf <= ?) Or" +
+                    "(repete = 0 And datai >= ?) Or" +
                     "(repete = 1 And dataf >= ? And datai <= ?)) Or" +
                     "(dataf = -1 And datai <= ?)";
+
 
             SQLiteDatabase tran = conexaoBanco.getReadableDatabase();
 
@@ -79,7 +80,7 @@ public class EntradaRepository {
             Cursor tuplas = tran.query(EsquemaBanco.Entrada.NOME_TABELA,
                     EsquemaBanco.Entrada.COLUNAS,
                     sql_Busca,
-                    new String[]{dataInicial+"", dataFinal+"", dataFinal+"", dataFinal+"", dataFinal+""}, null,
+                    new String[]{dataInicial+"", dataFinal+"", dataFinal+"", dataFinal+""}, null,
                     null, null);
 
             //ler as tuplas retornadas pelo banco e inserir no vetor de resultado

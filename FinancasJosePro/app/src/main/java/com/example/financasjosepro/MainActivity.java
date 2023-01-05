@@ -1,8 +1,5 @@
 package com.example.financasjosepro;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,17 +9,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.example.financasjosepro.configuracao.SharedPreferencesAplicao;
 import com.example.financasjosepro.controller.EntradaController;
 import com.example.financasjosepro.fragmets.InformacoesFragment;
 import com.example.financasjosepro.modelo.Entrada;
-import com.example.financasjosepro.repository.EntradaRepository;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.Random;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,12 +31,15 @@ public class MainActivity extends AppCompatActivity {
     private Button cadastraEntradaBtn;
     private Button cadastraSaidaBtn;
     private InformacoesFragment informacoesMesFragment;
+    private Button historicoBtn;
 
     private float x1, x2; //y1, y2 - quando altera a orientacao
     private LocalDateTime dataInicial;
     private LocalDateTime dataFinal;
     private String nomeMes[] = {"Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"};
     private LocalDateTime dataOperacao;
+
+    private ActivityResultLauncher<Intent> callBackCadastro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         mesAnoTxt = findViewById(R.id.titulomesanotxt);
         cadastraEntradaBtn = findViewById(R.id.entradaBtn);
         cadastraSaidaBtn = findViewById(R.id.saidaBtn);
+        historicoBtn = findViewById(R.id.historicoBtn);
 
         //referenciando o nosso fragment para um atributo
         informacoesMesFragment = (InformacoesFragment) getFragmentManager().findFragmentById((R.id.fragmentovalores));
@@ -56,22 +60,7 @@ public class MainActivity extends AppCompatActivity {
         configuraDataInicial();
         registroEventos();
 
-        cadastraEvento();
-
         atualizaDadosMes();
-    }
-
-    private void cadastraEvento(){
-
-        //String nome, double valor, LocalDateTime dataInicial, LocalDateTime dataFinal,
-        // boolean operacao, String descricao, String classificacao, boolean repete
-
-        EntradaController controller = new EntradaController(MainActivity.this);
-
-        Entrada novaEntrada = new Entrada("Salario",500,LocalDateTime.now(ZoneOffset.UTC),
-                LocalDateTime.now(ZoneOffset.UTC).withDayOfMonth(30), false, "Prolabore da startup", "Salario", false);
-
-        controller.insertEntrada(novaEntrada);
     }
 
     private void atualizaDadosMes(){
@@ -82,14 +71,25 @@ public class MainActivity extends AppCompatActivity {
                     dataOperacao.withDayOfMonth(dataOperacao.getMonth().
                             length(dataOperacao.toLocalDate().isLeapYear())));
 
+            //NOVO
             double somaMes = 0.0;
+            double somaSaida = 0.0;
+            double somaEntrada = 0.0;
 
             //somando os valores registrados no mes
             for(Entrada et : entradas){
                 somaMes += et.isOperacao() ? et.getValor() : (et.getValor()*-1);
+
+                if(et.isOperacao()){
+                    somaSaida += et.getValor();
+                }else{
+                    somaEntrada += et.getValor();
+                }
+
             }
 
-            informacoesMesFragment.setSaldoTotal(somaMes);
+            informacoesMesFragment.setSaldoTotal(somaMes, somaSaida, somaEntrada);
+            System.out.println(somaMes + " " + somaSaida + " " + somaEntrada);
 
         }catch (Exception e){
             //caso aconte. um erro mostramos a mens.
@@ -109,6 +109,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void registroEventos(){
+
+        //---NOVO
+        callBackCadastro = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        //nesta funcao vamos tratar a busca quando o cadastro encerra
+                        atualizaDadosMes();
+
+                    }
+                });
+
         cadastraEntradaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,6 +135,21 @@ public class MainActivity extends AppCompatActivity {
                 redirecionaCadastro(false);
             }
         });
+
+        //NOVO
+        historicoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                configuraDataInicial();
+                Intent activityHistorico = new Intent(MainActivity.this, HistoricoActivity.class);
+
+                activityHistorico.putExtra("tempo1",dataInicial.toInstant(ZoneOffset.UTC).toEpochMilli());
+                activityHistorico.putExtra("tempo2",dataFinal.toInstant(ZoneOffset.UTC).toEpochMilli());
+
+                startActivity(activityHistorico);
+            }
+        });
+
     }
 
     //redireciona true - Cadastra ENTRADA
@@ -132,7 +160,8 @@ public class MainActivity extends AppCompatActivity {
 
         activityEntrada.putExtra("operacao",operacao);
 
-        startActivity(activityEntrada);
+        //NOVO
+        callBackCadastro.launch(activityEntrada);
     }
 
     //mantendo a data inicial e final das entradas sumarizadas para o usuario
@@ -140,7 +169,10 @@ public class MainActivity extends AppCompatActivity {
         //primeiro dia do mes, hora, minuto e segundo 1/mm/yyyy 00:00:00
         dataInicial = dataOperacao.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
 
-        dataFinal = dataOperacao.withDayOfMonth(dataOperacao.getDayOfMonth()).withHour(23).withMinute(59).withSecond(59);
+        dataFinal = dataOperacao.withDayOfMonth(dataOperacao.getMonth().
+                length(dataOperacao.toLocalDate().isLeapYear())).withHour(23).
+                withMinute(59).withSecond(59);
+
         atualizaMesAno();
     }
 

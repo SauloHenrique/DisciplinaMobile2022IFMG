@@ -38,10 +38,30 @@ public class EntradaController {
 
     }
 
-    public void insertEntrada(Entrada novaEntrada){
+    public boolean insertEntrada(Entrada novaEntrada){
         if(novaEntrada != null){
             EntradaRepository repository = new EntradaRepository(contexto);
-            repository.insertEvento(novaEntrada);
+            return repository.insertEvento(novaEntrada);
+        }
+
+        return false;
+    }
+
+    public boolean insertEntrada(String nome, double valor, LocalDateTime dataI,
+                                 LocalDateTime dataF, String descricao,
+                                 String classe, boolean operacao, boolean repete){
+
+        //verificando os parametros passados no cadastro
+        if(nome != null && !nome.isEmpty() && valor > 0 && dataI != null &&
+        descricao != null && !descricao.isEmpty() && classe != null && !classe.isEmpty()){
+
+            Entrada novaEntrada = new Entrada(nome, valor, dataI, dataF, operacao,
+                    descricao, classe, repete);
+
+            //executa o INSERT
+            return insertEntrada(novaEntrada);
+        }else{
+            return false;
         }
     }
 

@@ -56,7 +56,6 @@
         android:id="@+id/entradasList"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:entries="@array/entradas"
         android:layout_margin="6dp"
         android:background="@drawable/borda_comum"
         android:layout_weight="1"

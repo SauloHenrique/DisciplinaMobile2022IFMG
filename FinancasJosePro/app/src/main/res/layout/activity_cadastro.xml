@@ -20,7 +20,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/nomeCadTxt"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Titulo"
@@ -40,6 +40,7 @@
                     android:textSize="@dimen/normal"/>
 
                 <EditText
+                    android:id="@+id/nomeCadTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -66,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:tooltipText="100000.00"
-                    android:text="100000.00"
+                    android:hint="0.00"
                     android:layout_marginRight="15dp"/>
 
                 <TextView
@@ -126,6 +127,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/mesesRepeteTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="meses"
