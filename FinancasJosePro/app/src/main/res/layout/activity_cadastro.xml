@@ -157,11 +157,30 @@
 
             </LinearLayout>
 
-            <View
+            <!--
+            ImageView foi removido para add uma
+            lista horizontal de fotos (ImageView's)
+            -->
+            <!--<ImageView
                 android:id="@+id/imagemCadFoto"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
-                android:background="@mipmap/ic_launcher"/>
+                android:src="@mipmap/ic_launcher"/>-->
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/borda_comum"
+                android:paddingTop="10dp">
+                <LinearLayout
+                    android:id="@+id/fotosCadList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    />
+            </HorizontalScrollView>
+
+
             <Button
                 android:id="@+id/addFotoBtn"
                 android:layout_width="wrap_content"

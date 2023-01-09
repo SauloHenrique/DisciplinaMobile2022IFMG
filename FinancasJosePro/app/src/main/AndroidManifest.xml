@@ -4,6 +4,7 @@
 
     <!--permite que inserimos dados no dispositivo do usuario-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"

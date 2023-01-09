@@ -44,6 +44,8 @@ public class ItemAdapter extends ArrayAdapter<Entrada> implements View.OnClickLi
 
         //dado disponivel
         //faca o que quiser com dataModel
+
+
     }
 
     private int ultimaPosicao = -1;
@@ -51,7 +53,7 @@ public class ItemAdapter extends ArrayAdapter<Entrada> implements View.OnClickLi
     @Override
     public View getView(int position, View novaView, ViewGroup parent) {
         // acessando a entrada da posicao a ser renderizada
-        Entrada dataModel = getItem(position);
+        Entrada entradaRend = getItem(position);
         // verificando a possibilidade de reutilizar uma view presente na lista
         ViewHolder viewHolder;
 
@@ -77,10 +79,10 @@ public class ItemAdapter extends ArrayAdapter<Entrada> implements View.OnClickLi
 
 
 
-        viewHolder.nomeTxt.setText(dataModel.getNome());
-        viewHolder.valorTxt.setText(dataModel.getValor()+"");
-        viewHolder.tipoTxt.setText(dataModel.isOperacao()?"+":"-");
-        viewHolder.dataTxt.setText(format.format(dataModel.getDataInicial()));
+        viewHolder.nomeTxt.setText(entradaRend.getNome());
+        viewHolder.valorTxt.setText(entradaRend.getValor()+"");
+        viewHolder.tipoTxt.setText(entradaRend.isOperacao()?"+":"-");
+        viewHolder.dataTxt.setText(format.format(entradaRend.getDataInicial()));
         // retorna a view preenchida
         return novaView;
     }

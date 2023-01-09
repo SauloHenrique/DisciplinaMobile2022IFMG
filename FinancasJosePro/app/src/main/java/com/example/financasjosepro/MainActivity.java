@@ -99,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void requisitaPermissoes(){
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA},0);
     }
 
     private void aplicaConfiguracoes(){
