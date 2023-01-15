@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gestão de Clientes"
+        android:layout_marginBottom="75dp"
+        android:textSize="@dimen/titulo"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome:"
+            android:textSize="@dimen/normal"/>
+
+        <EditText
+            android:id="@+id/nomeTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Digite seu nome"
+            android:inputType="text"
+            android:textSize="@dimen/normal"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email:"
+            android:textSize="@dimen/normal"/>
+
+        <EditText
+            android:id="@+id/emailTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="seu@email"
+            android:inputType="textEmailAddress"
+            android:textSize="@dimen/normal"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gênero:"
+            android:textSize="@dimen/normal"/>
+        <Spinner
+            android:id="@+id/generoSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/generos"
+            />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/ativoCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="está ativo?"
+        android:layout_marginBottom="75dp"
+        android:textSize="@dimen/normal"/>
+
+    <Button
+        android:id="@+id/salvarBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="salvar"/>
+
+    <Button
+        android:id="@+id/clienteBrn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clientes"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
